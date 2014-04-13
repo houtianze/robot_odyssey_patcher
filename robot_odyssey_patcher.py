@@ -155,10 +155,13 @@ def asmPadToLength(str, length):
 
     else:
         # Fill with no-ops, but jump over them.
+        #print('padLen: {}'.format(padLen))
+        alignedPadLen = padLen - 3 if padLen % 2 == 0 else padLen - 2
         result = str + asm("   jmp end\n" +
-                           "   nop\n" * (padLen - 3) +
+                           "   nop\n" * alignedPadLen +
                            "end:\n")
 
+    #print('result: {}, length: {}'.format(len(result), length))
     assert len(result) == length
     return result
 
